@@ -1,0 +1,2041 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大蒜银行 - 高级科技版</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00c6ff;
+            --secondary: #0072ff;
+            --accent: #6a11cb;
+            --dark-bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.8);
+            --card-border: rgba(56, 189, 248, 0.2);
+            --text: #e2e8f0;
+            --text-light: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --glow: 0 0 10px rgba(0, 198, 255, 0.5);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Exo 2', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1e293b 100%);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(106, 17, 203, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0, 114, 255, 0.1) 0%, transparent 40%);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+        
+        .logo-preview {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            background: rgba(30, 41, 59, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--glow);
+        }
+        
+        .logo-preview:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(0, 198, 255, 0.7);
+        }
+        
+        .logo-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 18px;
+        }
+        
+        .logo-preview i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .bank-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        .bank-title span {
+            color: white;
+            text-shadow: 0 0 10px rgba(0, 198, 255, 0.7);
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary), var(--accent), var(--secondary));
+            z-index: -1;
+            border-radius: 18px;
+        }
+        
+        .stat-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--card-bg);
+            border-radius: 16px;
+            z-index: -1;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: rgba(0, 198, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .stat-icon i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 5px 0;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .panel {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .panel::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary), var(--accent), var(--secondary));
+            z-index: -1;
+            border-radius: 18px;
+        }
+        
+        .panel::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--card-bg);
+            border-radius: 16px;
+            z-index: -1;
+        }
+        
+        .panel:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .panel-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        .panel-title i {
+            color: var(--primary);
+            background: rgba(0, 198, 255, 0.1);
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.5);
+            color: var(--text);
+            outline: none;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.2);
+        }
+        
+        .btn {
+            padding: 14px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(0, 198, 255, 0.1);
+            color: var(--text);
+            border: 1px solid var(--card-border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 198, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            background: rgba(0, 198, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, var(--success), #059669);
+            color: white;
+            border: none;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(45deg, var(--warning), #d97706);
+            color: white;
+            border: none;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(45deg, var(--danger), #b91c1c);
+            color: white;
+            border: none;
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .account-list {
+            max-height: 420px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .account-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .account-list::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 10px;
+        }
+        
+        .account-list::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        
+        .account-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-radius: 14px;
+            background: rgba(15, 23, 42, 0.5);
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--card-border);
+        }
+        
+        .account-item:hover {
+            background: rgba(30, 41, 59, 0.7);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .account-info h3 {
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+        
+        .account-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .account-balance {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            min-width: 120px;
+            text-align: right;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .account-actions {
+            display: flex;
+            gap: 8px;
+            margin-left: 15px;
+        }
+        
+        .transaction-history {
+            margin-top: 30px;
+        }
+        
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 18px;
+            border-radius: 14px;
+            background: rgba(15, 23, 42, 0.5);
+            margin-bottom: 12px;
+            border: 1px solid var(--card-border);
+            transition: all 0.2s ease;
+        }
+        
+        .transaction-item:hover {
+            background: rgba(30, 41, 59, 0.7);
+            transform: translateY(-3px);
+        }
+        
+        .transaction-item.deposit {
+            border-left: 4px solid var(--success);
+        }
+        
+        .transaction-item.withdrawal {
+            border-left: 4px solid var(--warning);
+        }
+        
+        .transaction-details {
+            flex: 1;
+        }
+        
+        .transaction-details .type {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .transaction-details .type .category {
+            font-size: 0.85rem;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 3px 10px;
+            border-radius: 20px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        .transaction-amount {
+            font-weight: 700;
+            font-size: 1.1rem;
+            min-width: 120px;
+            text-align: right;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .deposit-amount {
+            color: var(--success);
+        }
+        
+        .withdrawal-amount {
+            color: var(--warning);
+        }
+        
+        .transaction-date {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-top: 6px;
+        }
+        
+        .balance-change {
+            display: flex;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            gap: 8px;
+        }
+        
+        .balance-change span {
+            background: rgba(15, 23, 42, 0.7);
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+        
+        .logo-upload {
+            display: none;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+        }
+        
+        .empty-state i {
+            font-size: 3.5rem;
+            color: rgba(148, 163, 184, 0.3);
+            margin-bottom: 15px;
+        }
+        
+        .empty-state h3 {
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            padding: 18px 28px;
+            border-radius: 14px;
+            background: var(--card-bg);
+            color: var(--text);
+            font-weight: 500;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateX(200%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            border-left: 4px solid var(--danger);
+        }
+        
+        .notification.success {
+            border-left: 4px solid var(--success);
+        }
+        
+        .notification i {
+            font-size: 1.5rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: modalOpen 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+        }
+        
+        @keyframes modalOpen {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-light);
+            background: none;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--danger);
+            transform: rotate(90deg);
+        }
+        
+        .modal-title {
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .account-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+        }
+        
+        .balance-display {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .operation-type {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .op-type-btn {
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid var(--card-border);
+            background: rgba(15, 23, 42, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .op-type-btn.active {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 5px 15px rgba(0, 114, 255, 0.3);
+        }
+        
+        .op-type-btn i {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .op-type-btn.active i {
+            color: white;
+        }
+        
+        .op-type-btn span {
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+        
+        .category-select {
+            margin-bottom: 20px;
+        }
+        
+        .operation-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: var(--text-light);
+            margin-top: 40px;
+            font-size: 0.95rem;
+            border-top: 1px solid var(--card-border);
+        }
+        
+        .holographic-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            margin: 20px 0;
+            border-radius: 2px;
+        }
+        
+        /* ATM 界面样式 */
+        .atm-container {
+            display: none;
+            margin-top: 30px;
+        }
+        
+        .atm-machine {
+            background: linear-gradient(145deg, #1a253a, #0d1525);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .atm-screen {
+            background: linear-gradient(135deg, #0a0f1a, #1e293b);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 2px solid var(--card-border);
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .atm-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--card-border);
+        }
+        
+        .atm-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        .atm-account-info {
+            margin-bottom: 20px;
+        }
+        
+        .atm-account-select {
+            width: 100%;
+            margin-bottom: 20px;
+            background: rgba(15, 23, 42, 0.7);
+        }
+        
+        .atm-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .atm-action-btn {
+            padding: 20px;
+            font-size: 1.1rem;
+            border-radius: 15px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--card-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .atm-action-btn:hover {
+            background: rgba(0, 198, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .atm-action-btn i {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+        
+        .atm-form {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .atm-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .atm-numpad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .atm-num-btn {
+            padding: 15px;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .atm-num-btn:hover {
+            background: rgba(0, 198, 255, 0.2);
+        }
+        
+        .atm-action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .back-to-bank {
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .bank-title {
+                font-size: 1.8rem;
+            }
+            
+            .panel {
+                padding: 20px;
+            }
+            
+            .account-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .account-balance, .account-actions {
+                width: 100%;
+                text-align: left;
+            }
+            
+            .account-actions {
+                justify-content: flex-start;
+            }
+            
+            .atm-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 新增动画效果 */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo-preview" id="logoPreview">
+                    <i class="fas fa-university"></i>
+                    <img id="logoImage" src="" alt="Bank Logo">
+                </div>
+                <h1 class="bank-title">大蒜<span>银行</span></h1>
+            </div>
+            <div>
+                <button id="atmBtn" class="btn btn-primary">
+                    <i class="fas fa-cash-register"></i> ATM机服务
+                </button>
+            </div>
+            <input type="file" id="logoUpload" class="logo-upload" accept="image/*">
+        </header>
+        
+        <div class="holographic-line"></div>
+        
+        <div class="bank-content">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-value" id="totalAccounts">0</div>
+                    <div class="stat-label">总账户数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="stat-value" id="totalBalance">0</div>
+                    <div class="stat-label">总资产 (蒜币)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="stat-value" id="totalTransactions">0</div>
+                    <div class="stat-label">总交易数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                    <div class="stat-value" id="avgBalance">0</div>
+                    <div class="stat-label">平均余额 (蒜币)</div>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <div class="panel">
+                    <h2 class="panel-title"><i class="fas fa-user-plus"></i>添加新账户</h2>
+                    <form id="addAccountForm">
+                        <div class="form-group">
+                            <label for="accountName"><i class="fas fa-user"></i> 持卡人姓名</label>
+                            <input type="text" id="accountName" class="form-control" placeholder="请输入姓名" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="accountNumber"><i class="fas fa-credit-card"></i> 银行卡号</label>
+                            <input type="text" id="accountNumber" class="form-control" placeholder="请输入16位卡号" required maxlength="16">
+                        </div>
+                        <div class="form-group">
+                            <label for="initialBalance"><i class="fas fa-money-bill-wave"></i> 初始余额 (蒜币)</label>
+                            <input type="number" id="initialBalance" class="form-control" value="1000" min="0" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-plus-circle"></i> 创建账户
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="panel">
+                    <h2 class="panel-title"><i class="fas fa-credit-card"></i>账户管理</h2>
+                    <div class="account-list" id="accountList">
+                        <div class="empty-state" id="emptyAccounts">
+                            <i class="fas fa-wallet"></i>
+                            <h3>暂无账户信息</h3>
+                            <p>请添加新账户以开始使用大蒜银行</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2 class="panel-title"><i class="fas fa-history"></i>交易记录</h2>
+                <div class="transaction-history" id="transactionHistory">
+                    <div class="empty-state" id="emptyTransactions">
+                        <i class="fas fa-receipt"></i>
+                        <h3>暂无交易记录</h3>
+                        <p>账户资金操作将显示在这里</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ATM 界面 -->
+        <div class="atm-container" id="atmContainer">
+            <div class="atm-machine">
+                <div class="atm-screen">
+                    <div class="atm-header">
+                        <div class="atm-title">大蒜银行 ATM</div>
+                        <div class="account-balance" id="atmAccountBalance">0.00 蒜币</div>
+                    </div>
+                    
+                    <div class="atm-account-info">
+                        <div class="form-group">
+                            <label for="atmAccountSelect"><i class="fas fa-credit-card"></i> 选择账户</label>
+                            <select id="atmAccountSelect" class="form-control atm-account-select">
+                                <option value="">请选择您的账户</option>
+                                <!-- 动态填充账户 -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="atmMainMenu">
+                        <h3><i class="fas fa-list"></i> 请选择操作类型</h3>
+                        <div class="atm-actions">
+                            <div class="atm-action-btn" id="atmBalanceBtn">
+                                <i class="fas fa-wallet"></i>
+                                <span>查询余额</span>
+                            </div>
+                            <div class="atm-action-btn" id="atmDepositBtn">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>存款</span>
+                            </div>
+                            <div class="atm-action-btn" id="atmWithdrawBtn">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>取款</span>
+                            </div>
+                            <div class="atm-action-btn" id="atmTransferBtn">
+                                <i class="fas fa-exchange-alt"></i>
+                                <span>转账</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="atmBalanceScreen" class="atm-form">
+                        <div class="balance-display">
+                            当前余额: <span id="atmCurrentBalance">0.00</span> 蒜币
+                        </div>
+                        <div class="atm-buttons">
+                            <button class="btn btn-primary" id="atmBackToMenu">
+                                <i class="fas fa-arrow-left"></i> 返回菜单
+                            </button>
+                            <button class="btn btn-success" id="atmPrintReceipt">
+                                <i class="fas fa-print"></i> 打印凭条
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="atmDepositScreen" class="atm-form">
+                        <div class="form-group">
+                            <label for="atmDepositAmount"><i class="fas fa-money-bill-wave"></i> 存款金额 (蒜币)</label>
+                            <input type="number" id="atmDepositAmount" class="form-control" min="0" step="100" value="500" required>
+                        </div>
+                        <div class="atm-action-buttons">
+                            <button class="btn btn-success" id="atmConfirmDeposit">
+                                <i class="fas fa-check"></i> 确认存款
+                            </button>
+                            <button class="btn btn-warning atm-back-btn">
+                                <i class="fas fa-times"></i> 取消
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="atmWithdrawScreen" class="atm-form">
+                        <div class="form-group">
+                            <label for="atmWithdrawAmount"><i class="fas fa-money-bill-wave"></i> 取款金额 (蒜币)</label>
+                            <input type="number" id="atmWithdrawAmount" class="form-control" min="0" step="100" value="200" required>
+                        </div>
+                        <div class="atm-numpad">
+                            <div class="atm-num-btn" data-amount="100">100</div>
+                            <div class="atm-num-btn" data-amount="200">200</div>
+                            <div class="atm-num-btn" data-amount="500">500</div>
+                            <div class="atm-num-btn" data-amount="1000">1000</div>
+                            <div class="atm-num-btn" data-amount="2000">2000</div>
+                            <div class="atm-num-btn" data-amount="5000">5000</div>
+                        </div>
+                        <div class="atm-action-buttons">
+                            <button class="btn btn-success" id="atmConfirmWithdraw">
+                                <i class="fas fa-check"></i> 确认取款
+                            </button>
+                            <button class="btn btn-warning atm-back-btn">
+                                <i class="fas fa-times"></i> 取消
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="atmTransferScreen" class="atm-form">
+                        <div class="form-group">
+                            <label for="atmTransferAccount"><i class="fas fa-user"></i> 收款账户</label>
+                            <select id="atmTransferAccount" class="form-control" required>
+                                <option value="">请选择收款账户</option>
+                                <!-- 动态填充账户 -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="atmTransferAmount"><i class="fas fa-money-bill-wave"></i> 转账金额 (蒜币)</label>
+                            <input type="number" id="atmTransferAmount" class="form-control" min="0" step="100" value="300" required>
+                        </div>
+                        <div class="atm-action-buttons">
+                            <button class="btn btn-success" id="atmConfirmTransfer">
+                                <i class="fas fa-check"></i> 确认转账
+                            </button>
+                            <button class="btn btn-warning atm-back-btn">
+                                <i class="fas fa-times"></i> 取消
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="atmResultScreen" class="atm-form">
+                        <div class="balance-display" id="atmResultMessage">
+                            操作成功完成！
+                        </div>
+                        <div class="atm-buttons">
+                            <button class="btn btn-primary atm-back-btn">
+                                <i class="fas fa-arrow-left"></i> 返回菜单
+                            </button>
+                            <button class="btn btn-success" id="atmAnotherOperation">
+                                <i class="fas fa-redo"></i> 继续操作
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary back-to-bank" id="backToBankBtn">
+                    <i class="fas fa-arrow-left"></i> 返回银行主界面
+                </button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>大蒜银行 &copy; 2023 | 高级科技版银行管理系统 | 未来金融科技</p>
+        </footer>
+    </div>
+    
+    <!-- 资金操作模态框 -->
+    <div class="modal" id="operationModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <h2 class="modal-title"><i class="fas fa-coins"></i> <span id="modalTitle">资金操作</span></h2>
+            
+            <div class="account-header">
+                <div>
+                    <h3 id="modalAccountName">-</h3>
+                    <p id="modalAccountNumber">卡号: -</p>
+                </div>
+                <div class="account-balance" id="modalAccountBalance">0.00 蒜币</div>
+            </div>
+            
+            <div class="balance-display">
+                当前余额: <span id="currentBalanceDisplay">0.00</span> 蒜币
+            </div>
+            
+            <form id="operationForm">
+                <input type="hidden" id="operationAccountId">
+                <input type="hidden" id="operationType" value="income">
+                
+                <div class="operation-type">
+                    <div class="op-type-btn active" id="incomeBtn">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>收入</span>
+                    </div>
+                    <div class="op-type-btn" id="expenseBtn">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>支出</span>
+                    </div>
+                </div>
+                
+                <div class="form-group category-select">
+                    <label for="operationCategory"><i class="fas fa-tag"></i> 操作类别</label>
+                    <select id="operationCategory" class="form-control" required>
+                        <option value="">请选择类别</option>
+                        <!-- 动态填充 -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="operationAmount"><i class="fas fa-money-bill"></i> 金额 (蒜币)</label>
+                    <input type="number" id="operationAmount" class="form-control" min="0" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="operationNote"><i class="fas fa-comment"></i> 备注 (可选)</label>
+                    <input type="text" id="operationNote" class="form-control" placeholder="输入操作备注">
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-check-circle"></i> 确认操作
+                </button>
+            </form>
+            
+            <div class="operation-buttons">
+                <button class="btn btn-warning" id="setBalanceBtn">
+                    <i class="fas fa-sliders-h"></i> 设置余额
+                </button>
+                <button class="btn btn-danger" id="deleteAccountBtn">
+                    <i class="fas fa-trash"></i> 删除账户
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span>操作成功完成！</span>
+    </div>
+
+    <script>
+        // 银行数据存储
+        let bankData = {
+            accounts: [],
+            transactions: [],
+            logo: null
+        };
+
+        // 操作类别
+        const operationCategories = {
+            income: [
+                {id: 'salary', name: '工资'},
+                {id: 'bonus', name: '奖金'},
+                {id: 'gift', name: '红包'},
+                {id: 'investment', name: '投资回报'},
+                {id: 'other_income', name: '其他收入'}
+            ],
+            expense: [
+                {id: 'food', name: '餐饮'},
+                {id: 'transport', name: '公共交通'},
+                {id: 'shopping', name: '购物'},
+                {id: 'entertainment', name: '娱乐'},
+                {id: 'bills', name: '账单'},
+                {id: 'other_expense', name: '其他支出'}
+            ]
+        };
+
+        // DOM元素
+        const logoPreview = document.getElementById('logoPreview');
+        const logoUpload = document.getElementById('logoUpload');
+        const logoImage = document.getElementById('logoImage');
+        const addAccountForm = document.getElementById('addAccountForm');
+        const accountList = document.getElementById('accountList');
+        const transactionHistory = document.getElementById('transactionHistory');
+        const emptyAccounts = document.getElementById('emptyAccounts');
+        const emptyTransactions = document.getElementById('emptyTransactions');
+        const notification = document.getElementById('notification');
+        const operationModal = document.getElementById('operationModal');
+        const closeModal = document.getElementById('closeModal');
+        const operationForm = document.getElementById('operationForm');
+        const incomeBtn = document.getElementById('incomeBtn');
+        const expenseBtn = document.getElementById('expenseBtn');
+        const categorySelect = document.getElementById('operationCategory');
+        
+        // 统计元素
+        const totalAccounts = document.getElementById('totalAccounts');
+        const totalBalance = document.getElementById('totalBalance');
+        const totalTransactions = document.getElementById('totalTransactions');
+        const avgBalance = document.getElementById('avgBalance');
+        
+        // 模态框元素
+        const modalTitle = document.getElementById('modalTitle');
+        const modalAccountName = document.getElementById('modalAccountName');
+        const modalAccountNumber = document.getElementById('modalAccountNumber');
+        const modalAccountBalance = document.getElementById('modalAccountBalance');
+        const currentBalanceDisplay = document.getElementById('currentBalanceDisplay');
+        const operationAccountId = document.getElementById('operationAccountId');
+        const operationType = document.getElementById('operationType');
+        const operationAmount = document.getElementById('operationAmount');
+        const operationNote = document.getElementById('operationNote');
+        const setBalanceBtn = document.getElementById('setBalanceBtn');
+        const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+
+        // ATM元素
+        const atmBtn = document.getElementById('atmBtn');
+        const atmContainer = document.getElementById('atmContainer');
+        const bankContent = document.querySelector('.bank-content');
+        const atmAccountSelect = document.getElementById('atmAccountSelect');
+        const atmAccountBalance = document.getElementById('atmAccountBalance');
+        const atmCurrentBalance = document.getElementById('atmCurrentBalance');
+        const atmDepositAmount = document.getElementById('atmDepositAmount');
+        const atmWithdrawAmount = document.getElementById('atmWithdrawAmount');
+        const atmTransferAccount = document.getElementById('atmTransferAccount');
+        const atmTransferAmount = document.getElementById('atmTransferAmount');
+        const atmResultMessage = document.getElementById('atmResultMessage');
+        const backToBankBtn = document.getElementById('backToBankBtn');
+        let currentAtmAccount = null;
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            renderAccounts();
+            renderTransactions();
+            updateStats();
+            renderAtmAccounts();
+            
+            // 事件监听
+            logoPreview.addEventListener('click', () => logoUpload.click());
+            logoUpload.addEventListener('change', handleLogoUpload);
+            addAccountForm.addEventListener('submit', handleAddAccount);
+            closeModal.addEventListener('click', closeOperationModal);
+            operationForm.addEventListener('submit', handleOperation);
+            setBalanceBtn.addEventListener('click', () => setOperationType('adjust'));
+            deleteAccountBtn.addEventListener('click', handleDeleteAccount);
+            incomeBtn.addEventListener('click', () => setOpType('income'));
+            expenseBtn.addEventListener('click', () => setOpType('expense'));
+            
+            // ATM事件监听
+            atmBtn.addEventListener('click', showAtmInterface);
+            backToBankBtn.addEventListener('click', showBankInterface);
+            atmAccountSelect.addEventListener('change', handleAtmAccountSelect);
+            
+            // ATM操作按钮
+            document.getElementById('atmBalanceBtn').addEventListener('click', showBalanceScreen);
+            document.getElementById('atmDepositBtn').addEventListener('click', showDepositScreen);
+            document.getElementById('atmWithdrawBtn').addEventListener('click', showWithdrawScreen);
+            document.getElementById('atmTransferBtn').addEventListener('click', showTransferScreen);
+            
+            // ATM操作确认按钮
+            document.getElementById('atmConfirmDeposit').addEventListener('click', handleAtmDeposit);
+            document.getElementById('atmConfirmWithdraw').addEventListener('click', handleAtmWithdraw);
+            document.getElementById('atmConfirmTransfer').addEventListener('click', handleAtmTransfer);
+            
+            // ATM返回按钮
+            document.getElementById('atmBackToMenu').addEventListener('click', showAtmMainMenu);
+            document.querySelectorAll('.atm-back-btn').forEach(btn => {
+                btn.addEventListener('click', showAtmMainMenu);
+            });
+            
+            // ATM数字按钮
+            document.querySelectorAll('.atm-num-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    atmWithdrawAmount.value = btn.getAttribute('data-amount');
+                });
+            });
+            
+            // 打印凭条
+            document.getElementById('atmPrintReceipt').addEventListener('click', printAtmReceipt);
+            
+            // 继续操作
+            document.getElementById('atmAnotherOperation').addEventListener('click', () => {
+                showAtmMainMenu();
+                document.getElementById('atmAccountSelect').focus();
+            });
+            
+            // 点击模态框外部关闭
+            window.addEventListener('click', (e) => {
+                if (e.target === operationModal) {
+                    closeOperationModal();
+                }
+            });
+        });
+
+        // 加载数据
+        function loadData() {
+            const savedData = localStorage.getItem('garlicBankData');
+            if (savedData) {
+                bankData = JSON.parse(savedData);
+                // 初始化Logo
+                if (bankData.logo) {
+                    logoImage.src = bankData.logo;
+                    logoImage.style.display = 'block';
+                    document.querySelector('.logo-preview i').style.display = 'none';
+                }
+            }
+        }
+
+        // 保存数据
+        function saveData() {
+            localStorage.setItem('garlicBankData', JSON.stringify(bankData));
+        }
+
+        // 处理Logo上传
+        function handleLogoUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    logoImage.src = event.target.result;
+                    logoImage.style.display = 'block';
+                    document.querySelector('.logo-preview i').style.display = 'none';
+                    
+                    // 保存Logo
+                    bankData.logo = event.target.result;
+                    saveData();
+                    
+                    showNotification('银行Logo更新成功！', 'success');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // 处理添加账户
+        function handleAddAccount(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('accountName').value.trim();
+            const number = document.getElementById('accountNumber').value.trim();
+            const balance = parseFloat(document.getElementById('initialBalance').value);
+            
+            // 验证输入
+            if (!name) {
+                showNotification('请输入持卡人姓名！', 'error');
+                return;
+            }
+            
+            if (number.length !== 16 || !/^\d+$/.test(number)) {
+                showNotification('卡号必须是16位数字！', 'error');
+                return;
+            }
+            
+            // 验证卡号是否已存在
+            if (bankData.accounts.some(acc => acc.number === number)) {
+                showNotification('错误：该卡号已存在！', 'error');
+                return;
+            }
+            
+            // 创建新账户
+            const newAccount = {
+                id: Date.now().toString(),
+                name,
+                number,
+                balance,
+                createdAt: new Date().toISOString()
+            };
+            
+            bankData.accounts.push(newAccount);
+            saveData();
+            
+            // 清空表单
+            addAccountForm.reset();
+            document.getElementById('initialBalance').value = 1000;
+            
+            // 更新UI
+            renderAccounts();
+            updateStats();
+            renderAtmAccounts();
+            
+            showNotification(`账户 ${name} 创建成功！`, 'success');
+            logoPreview.classList.add('pulse');
+            setTimeout(() => logoPreview.classList.remove('pulse'), 1000);
+            
+            // 添加创建账户的交易记录
+            addTransaction(newAccount.id, 'income', balance, 'salary', '账户开户存款');
+        }
+
+        // 打开操作模态框
+        function openOperationModal(accountId, type) {
+            const account = bankData.accounts.find(acc => acc.id === accountId);
+            if (!account) return;
+            
+            operationAccountId.value = accountId;
+            
+            modalAccountName.textContent = account.name;
+            modalAccountNumber.textContent = `卡号: ${account.number}`;
+            modalAccountBalance.textContent = `${account.balance.toFixed(2)} 蒜币`;
+            currentBalanceDisplay.textContent = account.balance.toFixed(2);
+            
+            // 设置操作类型
+            if (type === 'adjust') {
+                setOpType('income');
+                document.getElementById('operationType').value = 'adjust';
+                modalTitle.innerHTML = '<i class="fas fa-sliders-h"></i> 调整余额';
+                categorySelect.innerHTML = '<option value="adjustment" selected>余额调整</option>';
+                categorySelect.disabled = true;
+                operationAmount.value = account.balance.toFixed(2);
+            } else {
+                setOpType(type);
+                document.getElementById('operationType').value = type;
+                categorySelect.disabled = false;
+                fillCategorySelect(type);
+                operationAmount.value = '';
+            }
+            
+            operationModal.style.display = 'flex';
+        }
+
+        // 设置操作类型
+        function setOpType(type) {
+            operationType.value = type;
+            
+            // 更新UI
+            if (type === 'income') {
+                incomeBtn.classList.add('active');
+                expenseBtn.classList.remove('active');
+                modalTitle.innerHTML = '<i class="fas fa-arrow-down"></i> 收入操作';
+            } else {
+                incomeBtn.classList.remove('active');
+                expenseBtn.classList.add('active');
+                modalTitle.innerHTML = '<i class="fas fa-arrow-up"></i> 支出操作';
+            }
+            
+            fillCategorySelect(type);
+        }
+
+        // 填充类别选择
+        function fillCategorySelect(type) {
+            if (!operationCategories[type]) return;
+            
+            categorySelect.innerHTML = '<option value="">请选择类别</option>';
+            const categories = operationCategories[type];
+            
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat.id;
+                option.textContent = cat.name;
+                categorySelect.appendChild(option);
+            });
+        }
+
+        // 关闭操作模态框
+        function closeOperationModal() {
+            operationModal.style.display = 'none';
+            operationForm.reset();
+            categorySelect.disabled = false;
+        }
+
+        // 处理资金操作
+        function handleOperation(e) {
+            e.preventDefault();
+            
+            const accountId = operationAccountId.value;
+            const type = operationType.value;
+            let category = categorySelect.value;
+            const amount = parseFloat(operationAmount.value);
+            let note = operationNote.value.trim();
+            
+            if (type === 'adjust') {
+                category = 'adjustment';
+                note = note || '余额调整';
+            } else if (!category) {
+                showNotification('错误：请选择操作类别！', 'error');
+                return;
+            }
+            
+            if (isNaN(amount) || amount <= 0) {
+                showNotification('错误：请输入有效的金额！', 'error');
+                return;
+            }
+            
+            const account = bankData.accounts.find(acc => acc.id === accountId);
+            if (!account) {
+                showNotification('错误：账户不存在！', 'error');
+                return;
+            }
+            
+            let newBalance = account.balance;
+            let transactionType = type;
+            
+            if (type === 'income') {
+                newBalance = account.balance + amount;
+            } else if (type === 'expense') {
+                if (amount > account.balance) {
+                    showNotification('错误：余额不足！', 'error');
+                    return;
+                }
+                newBalance = account.balance - amount;
+                transactionType = 'withdrawal';
+            } else if (type === 'adjust') {
+                newBalance = amount;
+                transactionType = 'adjustment';
+            }
+            
+            // 更新账户余额
+            const previousBalance = account.balance;
+            account.balance = newBalance;
+            
+            // 添加交易记录
+            addTransaction(accountId, transactionType, amount, category, note, previousBalance, newBalance);
+            
+            saveData();
+            renderAccounts();
+            renderTransactions();
+            updateStats();
+            
+            closeOperationModal();
+            
+            // 显示成功通知
+            let message = '';
+            switch(type) {
+                case 'income':
+                    message = `成功记录收入 ${amount.toFixed(2)} 蒜币`;
+                    break;
+                case 'expense':
+                    message = `成功记录支出 ${amount.toFixed(2)} 蒜币`;
+                    break;
+                case 'adjust':
+                    message = `账户余额已调整为 ${amount.toFixed(2)} 蒜币`;
+                    break;
+            }
+            
+            showNotification(message, 'success');
+        }
+
+        // 处理删除账户
+        function handleDeleteAccount() {
+            const accountId = operationAccountId.value;
+            const account = bankData.accounts.find(acc => acc.id === accountId);
+            
+            if (!account) return;
+            
+            if (confirm(`确定要删除账户 ${account.name} (${account.number}) 吗？此操作不可撤销！`)) {
+                const accountIndex = bankData.accounts.findIndex(acc => acc.id === accountId);
+                if (accountIndex !== -1) {
+                    bankData.accounts.splice(accountIndex, 1);
+                    
+                    // 删除与该账户相关的交易
+                    bankData.transactions = bankData.transactions.filter(
+                        trans => trans.accountId !== accountId
+                    );
+                    
+                    saveData();
+                    renderAccounts();
+                    renderTransactions();
+                    updateStats();
+                    renderAtmAccounts();
+                    
+                    closeOperationModal();
+                    showNotification(`账户 ${account.name} 已删除！`, 'success');
+                }
+            }
+        }
+
+        // 添加交易记录
+        function addTransaction(accountId, type, amount, category, note, prevBalance, newBalance) {
+            const account = bankData.accounts.find(acc => acc.id === accountId);
+            if (!account) return;
+            
+            // 查找类别名称
+            let categoryName = '';
+            if (type === 'income' || type === 'adjustment') {
+                const cat = operationCategories.income?.find(c => c.id === category) || 
+                          {name: category === 'adjustment' ? '余额调整' : '其他收入'};
+                categoryName = cat.name;
+            } else {
+                const cat = operationCategories.expense?.find(c => c.id === category) || 
+                          {name: '其他支出'};
+                categoryName = cat.name;
+            }
+            
+            const transaction = {
+                id: Date.now().toString(),
+                accountId,
+                accountName: account.name,
+                accountNumber: account.number,
+                type,
+                amount,
+                category: categoryName,
+                note,
+                previousBalance: prevBalance || account.balance,
+                newBalance: newBalance || (type === 'income' ? account.balance + amount : account.balance - amount),
+                date: new Date().toISOString()
+            };
+            
+            bankData.transactions.unshift(transaction);
+        }
+
+        // 渲染账户列表
+        function renderAccounts() {
+            if (bankData.accounts.length === 0) {
+                emptyAccounts.style.display = 'block';
+                accountList.innerHTML = '';
+                return;
+            }
+            
+            emptyAccounts.style.display = 'none';
+            accountList.innerHTML = '';
+            
+            bankData.accounts.forEach(account => {
+                const accountItem = document.createElement('div');
+                accountItem.className = 'account-item';
+                accountItem.innerHTML = `
+                    <div class="account-info">
+                        <h3>${account.name}</h3>
+                        <p>卡号: ${account.number} | 创建于: ${formatDate(account.createdAt)}</p>
+                    </div>
+                    <div class="account-balance">${account.balance.toFixed(2)} 蒜币</div>
+                    <div class="account-actions">
+                        <button class="btn btn-success btn-sm" onclick="openOperationModal('${account.id}', 'income')">
+                            <i class="fas fa-plus"></i> 收入
+                        </button>
+                        <button class="btn btn-warning btn-sm" onclick="openOperationModal('${account.id}', 'expense')">
+                            <i class="fas fa-minus"></i> 支出
+                        </button>
+                        <button class="btn btn-primary btn-sm" onclick="openOperationModal('${account.id}', 'adjust')">
+                            <i class="fas fa-edit"></i> 调整
+                        </button>
+                    </div>
+                `;
+                accountList.appendChild(accountItem);
+            });
+        }
+
+        // 渲染交易记录
+        function renderTransactions() {
+            if (bankData.transactions.length === 0) {
+                emptyTransactions.style.display = 'block';
+                transactionHistory.innerHTML = '';
+                return;
+            }
+            
+            emptyTransactions.style.display = 'none';
+            transactionHistory.innerHTML = '';
+            
+            // 只显示最近的15笔交易
+            const recentTransactions = bankData.transactions.slice(0, 15);
+            
+            recentTransactions.forEach(transaction => {
+                const transactionItem = document.createElement('div');
+                transactionItem.className = `transaction-item ${transaction.type === 'income' || transaction.type === 'adjustment' ? 'deposit' : 'withdrawal'}`;
+                
+                let typeText = transaction.type === 'income' ? '收入' : 
+                              transaction.type === 'withdrawal' ? '支出' : '调整';
+                
+                let amountClass = transaction.type === 'income' || transaction.type === 'adjustment' ? 'deposit-amount' : 'withdrawal-amount';
+                
+                transactionItem.innerHTML = `
+                    <div class="transaction-details">
+                        <div class="type">
+                            ${transaction.accountName} - ${typeText}
+                            <span class="category">${transaction.category}</span>
+                        </div>
+                        <div>${transaction.note}</div>
+                        <div class="transaction-date">${formatDate(transaction.date)}</div>
+                        <div class="balance-change">
+                            <span>前余额: ${transaction.previousBalance.toFixed(2)}</span>
+                            <span>新余额: ${transaction.newBalance.toFixed(2)}</span>
+                        </div>
+                    </div>
+                    <div class="transaction-amount ${amountClass}">
+                        ${transaction.type === 'withdrawal' ? '-' : '+'}${transaction.amount.toFixed(2)} 蒜币
+                    </div>
+                `;
+                transactionHistory.appendChild(transactionItem);
+            });
+        }
+
+        // 更新统计信息
+        function updateStats() {
+            totalAccounts.textContent = bankData.accounts.length;
+            
+            const total = bankData.accounts.reduce((sum, acc) => sum + acc.balance, 0);
+            totalBalance.textContent = total.toFixed(2);
+            
+            totalTransactions.textContent = bankData.transactions.length;
+            
+            const avg = bankData.accounts.length ? (total / bankData.accounts.length).toFixed(2) : '0.00';
+            avgBalance.textContent = avg;
+        }
+
+        // 格式化日期
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // 显示通知
+        function showNotification(message, type = '') {
+            notification.innerHTML = `<i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i><span>${message}</span>`;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // ATM相关函数
+        function renderAtmAccounts() {
+            atmAccountSelect.innerHTML = '<option value="">请选择您的账户</option>';
+            atmTransferAccount.innerHTML = '<option value="">请选择收款账户</option>';
+            
+            bankData.accounts.forEach(account => {
+                const option1 = document.createElement('option');
+                option1.value = account.id;
+                option1.textContent = `${account.name} (${account.number}) - ${account.balance.toFixed(2)} 蒜币`;
+                atmAccountSelect.appendChild(option1);
+                
+                const option2 = document.createElement('option');
+                option2.value = account.id;
+                option2.textContent = `${account.name} (${account.number})`;
+                atmTransferAccount.appendChild(option2);
+            });
+        }
+        
+        function showAtmInterface() {
+            bankContent.style.display = 'none';
+            atmContainer.style.display = 'block';
+            renderAtmAccounts();
+            showAtmMainMenu();
+        }
+        
+        function showBankInterface() {
+            atmContainer.style.display = 'none';
+            bankContent.style.display = 'block';
+            renderAccounts();
+            renderTransactions();
+            updateStats();
+        }
+        
+        function handleAtmAccountSelect() {
+            const accountId = atmAccountSelect.value;
+            if (!accountId) return;
+            
+            currentAtmAccount = bankData.accounts.find(acc => acc.id === accountId);
+            if (currentAtmAccount) {
+                atmAccountBalance.textContent = `${currentAtmAccount.balance.toFixed(2)} 蒜币`;
+            }
+        }
+        
+        function showAtmMainMenu() {
+            document.querySelectorAll('.atm-form').forEach(form => {
+                form.style.display = 'none';
+            });
+            document.getElementById('atmMainMenu').style.display = 'block';
+        }
+        
+        function showBalanceScreen() {
+            if (!currentAtmAccount) {
+                showNotification('请先选择账户！', 'error');
+                return;
+            }
+            
+            document.getElementById('atmMainMenu').style.display = 'none';
+            document.getElementById('atmBalanceScreen').style.display = 'block';
+            atmCurrentBalance.textContent = currentAtmAccount.balance.toFixed(2);
+        }
+        
+        function showDepositScreen() {
+            if (!currentAtmAccount) {
+                showNotification('请先选择账户！', 'error');
+                return;
+            }
+            
+            document.getElementById('atmMainMenu').style.display = 'none';
+            document.getElementById('atmDepositScreen').style.display = 'block';
+            atmDepositAmount.value = '500';
+        }
+        
+        function showWithdrawScreen() {
+            if (!currentAtmAccount) {
+                showNotification('请先选择账户！', 'error');
+                return;
+            }
+            
+            document.getElementById('atmMainMenu').style.display = 'none';
+            document.getElementById('atmWithdrawScreen').style.display = 'block';
+            atmWithdrawAmount.value = '200';
+        }
+        
+        function showTransferScreen() {
+            if (!currentAtmAccount) {
+                showNotification('请先选择账户！', 'error');
+                return;
+            }
+            
+            document.getElementById('atmMainMenu').style.display = 'none';
+            document.getElementById('atmTransferScreen').style.display = 'block';
+            atmTransferAmount.value = '300';
+        }
+        
+        function showResultScreen(message) {
+            document.querySelectorAll('.atm-form').forEach(form => {
+                form.style.display = 'none';
+            });
+            document.getElementById('atmResultScreen').style.display = 'block';
+            atmResultMessage.textContent = message;
+        }
+        
+        function handleAtmDeposit() {
+            const amount = parseFloat(atmDepositAmount.value);
+            if (isNaN(amount) || amount <= 0) {
+                showNotification('请输入有效的金额！', 'error');
+                return;
+            }
+            
+            // 更新账户余额
+            currentAtmAccount.balance += amount;
+            
+            // 添加交易记录
+            addTransaction(currentAtmAccount.id, 'income', amount, 'deposit', 'ATM存款');
+            
+            saveData();
+            updateStats();
+            atmAccountBalance.textContent = `${currentAtmAccount.balance.toFixed(2)} 蒜币`;
+            
+            showResultScreen(`存款成功！存入 ${amount.toFixed(2)} 蒜币<br>当前余额: ${currentAtmAccount.balance.toFixed(2)} 蒜币`);
+            
+            showNotification(`成功存入 ${amount.toFixed(2)} 蒜币`, 'success');
+        }
+        
+        function handleAtmWithdraw() {
+            const amount = parseFloat(atmWithdrawAmount.value);
+            if (isNaN(amount) || amount <= 0) {
+                showNotification('请输入有效的金额！', 'error');
+                return;
+            }
+            
+            if (amount > currentAtmAccount.balance) {
+                showNotification('余额不足！', 'error');
+                return;
+            }
+            
+            // 更新账户余额
+            currentAtmAccount.balance -= amount;
+            
+            // 添加交易记录
+            addTransaction(currentAtmAccount.id, 'withdrawal', amount, 'withdraw', 'ATM取款');
+            
+            saveData();
+            updateStats();
+            atmAccountBalance.textContent = `${currentAtmAccount.balance.toFixed(2)} 蒜币`;
+            
+            showResultScreen(`取款成功！取出 ${amount.toFixed(2)} 蒜币<br>当前余额: ${currentAtmAccount.balance.toFixed(2)} 蒜币`);
+            
+            showNotification(`成功取出 ${amount.toFixed(2)} 蒜币`, 'success');
+        }
+        
+        function handleAtmTransfer() {
+            const amount = parseFloat(atmTransferAmount.value);
+            const toAccountId = atmTransferAccount.value;
+            
+            if (isNaN(amount) || amount <= 0) {
+                showNotification('请输入有效的金额！', 'error');
+                return;
+            }
+            
+            if (!toAccountId) {
+                showNotification('请选择收款账户！', 'error');
+                return;
+            }
+            
+            if (amount > currentAtmAccount.balance) {
+                showNotification('余额不足！', 'error');
+                return;
+            }
+            
+            const toAccount = bankData.accounts.find(acc => acc.id === toAccountId);
+            if (!toAccount) {
+                showNotification('收款账户不存在！', 'error');
+                return;
+            }
+            
+            if (toAccountId === currentAtmAccount.id) {
+                showNotification('不能转账给自己！', 'error');
+                return;
+            }
+            
+            // 更新账户余额
+            currentAtmAccount.balance -= amount;
+            toAccount.balance += amount;
+            
+            // 添加交易记录
+            addTransaction(currentAtmAccount.id, 'withdrawal', amount, 'transfer', `转账给 ${toAccount.name}`);
+            addTransaction(toAccount.id, 'income', amount, 'transfer', `${currentAtmAccount.name} 的转账`);
+            
+            saveData();
+            updateStats();
+            atmAccountBalance.textContent = `${currentAtmAccount.balance.toFixed(2)} 蒜币`;
+            
+            showResultScreen(`转账成功！转出 ${amount.toFixed(2)} 蒜币。收款人: ${toAccount.name}。当前余额: ${currentAtmAccount.balance.toFixed(2)} 蒜币`);
+            
+            showNotification(`成功转账 ${amount.toFixed(2)} 蒜币给 ${toAccount.name}`, 'success');
+        }
+        
+        function printAtmReceipt() {
+            if (!currentAtmAccount) {
+                showNotification('请先选择账户！', 'error');
+                return;
+            }
+            
+            const receiptContent = `
+                <div style="font-family: 'Exo 2', sans-serif; text-align: center; padding: 20px;">
+                    <h2 style="color: #00c6ff; margin-bottom: 15px;">大蒜银行</h2>
+                    <p>-------------------------------</p>
+                    <h3 style="margin: 15px 0;">账户凭条</h3>
+                    <p><strong>账户名称:</strong> ${currentAtmAccount.name}</p>
+                    <p><strong>卡号:</strong> ${currentAtmAccount.number}</p>
+                    <p><strong>余额:</strong> ${currentAtmAccount.balance.toFixed(2)} 蒜币</p>
+                    <p>-------------------------------</p>
+                    <p>${new Date().toLocaleString()}</p>
+                    <p style="margin-top: 20px; color: #94a3b8;">感谢使用大蒜银行服务</p>
+                </div>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>大蒜银行凭条</title>
+                        <style>
+                            body { 
+                                font-family: 'Exo 2', sans-serif; 
+                                margin: 0;
+                                padding: 20px;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        ${receiptContent}
+                    </body>
+                </html>
+            `);
+            printWindow.document.close();
+            
+            setTimeout(() => {
+                printWindow.print();
+                setTimeout(() => printWindow.close(), 500);
+            }, 500);
+        }
+
+        // 暴露函数给全局作用域
+        window.openOperationModal = openOperationModal;
+    </script>
+</body>
+</html>
